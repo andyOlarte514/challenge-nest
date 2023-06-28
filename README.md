@@ -26,10 +26,12 @@
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
-## Installation
+## Requirements
 
 - Install [PostgreSQL](https://www.postgresql.org/download/)
 - Modify `.env` file with PostgreSQL credentials
+
+## Installation
 
 ```bash
 $ npm install
