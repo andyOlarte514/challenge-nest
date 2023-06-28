@@ -8,7 +8,7 @@ import {
   OneToMany,
 } from 'typeorm';
 import { User } from '../users/user.entity';
-import { Note } from 'src/notes/note.entity';
+import { Note } from '../notes/note.entity';
 
 @Entity()
 export class Project {

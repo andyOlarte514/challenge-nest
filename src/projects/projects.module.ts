@@ -8,6 +8,6 @@ import { ProjectsService } from './projects.service';
 @Module({
   imports: [TypeOrmModule.forFeature([Project, ProjectsRepository])],
   controllers: [ProjectsController],
-  providers: [ProjectsService],
+  providers: [ProjectsService, ProjectsRepository],
 })
 export class ProjectsModule {}

@@ -9,6 +9,6 @@ import { AuthModule } from 'src/auth/auth.module';
 @Module({
   imports: [AuthModule, TypeOrmModule.forFeature([Note, NotesRepository])],
   controllers: [NotesController],
-  providers: [NotesService],
+  providers: [NotesService, NotesRepository],
 })
 export class NotessModule {}
