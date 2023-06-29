@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { CreateNoteDto } from 'src/notes/dto/note.dto';
-import { User } from 'src/users/user.entity';
+
+import { CreateNoteDto } from '../../notes/dto/note.dto';
+import { User } from '../../users/user.entity';
 
 export class CreateProjectDto {
   @ApiProperty({ example: 'Project Example', description: 'Name Project' })

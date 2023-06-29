@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Project } from 'src/projects/project.entity';
+import { Project } from '../../projects/project.entity';
 
 export class CreateNoteDto {
   @ApiProperty({ example: 'example title', description: 'Note Title' })
