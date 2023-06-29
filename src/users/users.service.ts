@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 import { User } from './user.entity';
+import { UserDto } from './dto/user.dto';
 
 @Injectable()
 export class UsersService {
@@ -24,7 +25,7 @@ export class UsersService {
     });
   }
 
-  async createUser(user: User): Promise<User> {
+  async createUser(user: UserDto): Promise<User> {
     const isExistsUser = await this.getUserByEmail(user.email);
     if (!!isExistsUser) {
       throw new ConflictException('user already exists');

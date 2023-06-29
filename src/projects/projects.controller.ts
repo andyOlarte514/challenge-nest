@@ -10,7 +10,9 @@ import {
 import { ProjectsService } from './projects.service';
 import { CreateProjectDto } from './dto/project.dto';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('projects')
 @Controller('projects')
 @UseGuards(JwtAuthGuard)
 export class ProjectsController {

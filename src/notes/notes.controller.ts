@@ -10,7 +10,9 @@ import {
 import { NotesService } from './notes.service';
 import { CreateNoteDto } from './dto/note.dto';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('notes')
 @Controller('notes')
 @UseGuards(JwtAuthGuard)
 export class NotesController {
