@@ -14,4 +14,12 @@ export class AuthController {
     const token = await this.authService.signIn({ email, password });
     return { token };
   }
+
+  @Post('validate-token')
+  async validateToken(
+    @Body('token') token: string,
+  ): Promise<{ valid: boolean }> {
+    const isValid = await this.authService.validateToken(token);
+    return { valid: isValid };
+  }
 }
