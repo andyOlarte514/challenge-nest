@@ -33,7 +33,7 @@ describe('ProjectsService', () => {
     ];
     jest.spyOn(projectRepository, 'find').mockResolvedValue(projects);
 
-    const result = await projectsService.findAll();
+    const result = await projectsService.getAllProjects();
 
     expect(result).toEqual(projects);
     expect(projectRepository.find).toHaveBeenCalledWith({
@@ -61,7 +61,7 @@ describe('ProjectsService', () => {
     const project: Project = { id: projectId, name: 'Project 1' } as Project;
     jest.spyOn(projectRepository, 'findOne').mockResolvedValue(project);
 
-    const result = await projectsService.findOne(projectId);
+    const result = await projectsService.getProjectById(projectId);
 
     expect(result).toEqual(project);
     expect(projectRepository.findOne).toHaveBeenCalledWith({
@@ -72,6 +72,8 @@ describe('ProjectsService', () => {
 
   it('should remove a project by ID', async () => {
     const projectId = 1;
+    const project: Project = { id: projectId, name: 'Project 1' } as Project;
+    jest.spyOn(projectRepository, 'findOne').mockResolvedValue(project);
     jest.spyOn(projectRepository, 'delete').mockResolvedValue(undefined);
 
     await projectsService.remove(projectId);

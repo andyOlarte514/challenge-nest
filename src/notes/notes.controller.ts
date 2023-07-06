@@ -6,6 +6,7 @@ import {
   Param,
   Delete,
   UseGuards,
+  Put,
 } from '@nestjs/common';
 import { NotesService } from './notes.service';
 import { CreateNoteDto } from './dto/note.dto';
@@ -19,8 +20,8 @@ export class NotesController {
   constructor(private readonly notesService: NotesService) {}
 
   @Get()
-  async findAll() {
-    return this.notesService.findAll();
+  async getAllNotes() {
+    return this.notesService.getAllNotes();
   }
 
   @Post()
@@ -29,12 +30,22 @@ export class NotesController {
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: number) {
-    return this.notesService.findOne(id);
+  async getNoteById(@Param('id') id: number) {
+    return this.notesService.getNoteById(id);
+  }
+
+  @Put(':id')
+  async updateNote(@Param('id') id: number, @Body() data: CreateNoteDto) {
+    return this.notesService.update(id, data);
   }
 
   @Delete(':id')
   async remove(@Param('id') id: number) {
     return this.notesService.remove(id);
+  }
+
+  @Get('/by-project/:projectId')
+  async getAllByProject(@Param('projectId') projectId: string) {
+    return this.notesService.getAllByProject(projectId);
   }
 }

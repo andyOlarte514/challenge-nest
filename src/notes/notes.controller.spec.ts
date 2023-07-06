@@ -30,14 +30,14 @@ describe('NotesController', () => {
     noteRepository = module.get<Repository<Note>>(getRepositoryToken(Note));
   });
 
-  describe('findAll', () => {
+  describe('getAllNotes', () => {
     it('should return all notes', async () => {
       const notes: Note[] = [
         { id: 1, content: 'Note 1', project: {} as any },
       ] as Note[];
-      jest.spyOn(notesService, 'findAll').mockResolvedValue(notes);
-      const result = await notesController.findAll();
-      expect(notesService.findAll).toHaveBeenCalled();
+      jest.spyOn(notesService, 'getAllNotes').mockResolvedValue(notes);
+      const result = await notesController.getAllNotes();
+      expect(notesService.getAllNotes).toHaveBeenCalled();
       expect(result).toEqual(notes);
     });
   });
@@ -61,7 +61,7 @@ describe('NotesController', () => {
     });
   });
 
-  describe('findOne', () => {
+  describe('getNoteById', () => {
     it('should return a note by ID', async () => {
       const noteId = 1;
       const note: Note = {
@@ -69,9 +69,9 @@ describe('NotesController', () => {
         content: 'Note 1',
         project: {} as any,
       } as Note;
-      jest.spyOn(notesService, 'findOne').mockResolvedValue(note);
-      const result = await notesController.findOne(noteId);
-      expect(notesService.findOne).toHaveBeenCalledWith(noteId);
+      jest.spyOn(notesService, 'getNoteById').mockResolvedValue(note);
+      const result = await notesController.getNoteById(noteId);
+      expect(notesService.getNoteById).toHaveBeenCalledWith(noteId);
       expect(result).toEqual(note);
     });
   });

@@ -50,7 +50,7 @@ describe('NotesService', () => {
         { id: 1, content: 'Note 1', project: {} as any },
       ] as Note[];
       jest.spyOn(noteRepository, 'find').mockResolvedValue(notes);
-      const result = await notesService.findAll();
+      const result = await notesService.getAllNotes();
       expect(noteRepository.find).toHaveBeenCalledWith({
         relations: ['project'],
       });
@@ -67,7 +67,7 @@ describe('NotesService', () => {
         project: {} as any,
       } as Note;
       jest.spyOn(noteRepository, 'findOne').mockResolvedValue(note);
-      const result = await notesService.findOne(noteId);
+      const result = await notesService.getNoteById(noteId);
       expect(noteRepository.findOne).toHaveBeenCalledWith({
         where: { id: noteId },
         relations: ['project'],
@@ -79,6 +79,12 @@ describe('NotesService', () => {
   describe('remove', () => {
     it('should remove a note by ID', async () => {
       const noteId = 1;
+      const note: Note = {
+        id: noteId,
+        content: 'Note 1',
+        project: {} as any,
+      } as Note;
+      jest.spyOn(noteRepository, 'findOne').mockResolvedValue(note);
       jest.spyOn(noteRepository, 'delete').mockResolvedValue(undefined);
       await notesService.remove(noteId);
       expect(noteRepository.delete).toHaveBeenCalledWith(noteId);

@@ -32,16 +32,16 @@ describe('ProjectsController', () => {
     );
   });
 
-  describe('findAll', () => {
+  describe('getAllProjects', () => {
     it('should return all projects', async () => {
       const projects = [
         { id: 1, name: 'Project 1' },
         { id: 2, name: 'Project 2' },
       ] as Project[];
-      jest.spyOn(projectsService, 'findAll').mockResolvedValue(projects);
-      const result = await projectsController.findAll();
+      jest.spyOn(projectsService, 'getAllProjects').mockResolvedValue(projects);
+      const result = await projectsController.getAllProjects();
       expect(result).toEqual(projects);
-      expect(projectsService.findAll).toHaveBeenCalled();
+      expect(projectsService.getAllProjects).toHaveBeenCalled();
     });
   });
 
@@ -63,10 +63,10 @@ describe('ProjectsController', () => {
     it('should return a project by ID', async () => {
       const projectId = 1;
       const project = { id: projectId, name: 'Project 1' } as Project;
-      jest.spyOn(projectsService, 'findOne').mockResolvedValue(project);
-      const result = await projectsController.findOne(projectId);
+      jest.spyOn(projectsService, 'getProjectById').mockResolvedValue(project);
+      const result = await projectsController.getProjectById(projectId);
       expect(result).toEqual(project);
-      expect(projectsService.findOne).toHaveBeenCalledWith(projectId);
+      expect(projectsService.getProjectById).toHaveBeenCalledWith(projectId);
     });
   });
 

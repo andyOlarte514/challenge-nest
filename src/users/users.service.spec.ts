@@ -55,6 +55,7 @@ describe('UsersService', () => {
     it('should create a new user', async () => {
       const user = new User();
       user.email = 'test@example.com';
+      jest.spyOn(userRepository, 'findOne').mockResolvedValue(null);
       jest.spyOn(usersService, 'getUserByEmail').mockResolvedValue(null);
       jest.spyOn(userRepository, 'save').mockResolvedValue(user);
 
@@ -67,6 +68,7 @@ describe('UsersService', () => {
     it('should throw a ConflictException if user already exists', async () => {
       const user = new User();
       user.email = 'test@example.com';
+      jest.spyOn(userRepository, 'findOne').mockResolvedValue(user);
       jest.spyOn(usersService, 'getUserByEmail').mockResolvedValue(user);
 
       await expect(usersService.createUser(user)).rejects.toThrow(
@@ -96,6 +98,9 @@ describe('UsersService', () => {
   describe('deleteUser', () => {
     it('should delete a user', async () => {
       const email = 'test@example.com';
+      const user = new User();
+      user.email = email;
+      jest.spyOn(userRepository, 'findOne').mockResolvedValue(user);
       jest.spyOn(userRepository, 'delete').mockResolvedValue(undefined);
 
       await usersService.deleteUser(email);

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Project } from './project.entity';
@@ -13,7 +13,7 @@ export class ProjectsService {
 
   relations = ['owner', 'collaborators', 'notes'];
 
-  async findAll(): Promise<Project[]> {
+  async getAllProjects(): Promise<Project[]> {
     return this.projectRepository.find({
       relations: this.relations,
     });
@@ -24,7 +24,28 @@ export class ProjectsService {
     return this.projectRepository.save(project);
   }
 
-  async findOne(id: number): Promise<Project> {
+  async getProjectById(id: number): Promise<Project> {
+    const project = await this.projectRepository.findOne({
+      where: { id },
+      relations: this.relations,
+    });
+
+    if (!project) {
+      throw new NotFoundException('project not found');
+    }
+
+    return project;
+  }
+
+  async update(id: number, data: CreateProjectDto): Promise<Project> {
+    const existingProject = await this.getProjectById(id);
+
+    if (!existingProject) {
+      throw new NotFoundException('project not found');
+    }
+
+    await this.projectRepository.update(id, data);
+
     return this.projectRepository.findOne({
       where: { id },
       relations: this.relations,
@@ -32,6 +53,22 @@ export class ProjectsService {
   }
 
   async remove(id: number): Promise<void> {
+    const project = await this.getProjectById(id);
+
+    if (!project) {
+      throw new NotFoundException('project not found');
+    }
+
     await this.projectRepository.delete(id);
+  }
+
+  async getAllByOwnwer(ownerEmail: string): Promise<Project[]> {
+    return this.projectRepository
+      .createQueryBuilder('project')
+      .leftJoinAndSelect('project.owner', 'user')
+      .where('user.email = :ownerEmail', { ownerEmail })
+      .leftJoinAndSelect('project.collaborators', 'collaborators')
+      .leftJoinAndSelect('project.notes', 'notes')
+      .getMany();
   }
 }

@@ -6,6 +6,7 @@ import {
   Param,
   Delete,
   UseGuards,
+  Put,
 } from '@nestjs/common';
 import { ProjectsService } from './projects.service';
 import { CreateProjectDto } from './dto/project.dto';
@@ -19,8 +20,8 @@ export class ProjectsController {
   constructor(private readonly projectsService: ProjectsService) {}
 
   @Get()
-  async findAll() {
-    return this.projectsService.findAll();
+  async getAllProjects() {
+    return this.projectsService.getAllProjects();
   }
 
   @Post()
@@ -29,12 +30,22 @@ export class ProjectsController {
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: number) {
-    return this.projectsService.findOne(id);
+  async getProjectById(@Param('id') id: number) {
+    return this.projectsService.getProjectById(id);
+  }
+
+  @Put(':id')
+  async updateProject(@Param('id') id: number, @Body() data: CreateProjectDto) {
+    return this.projectsService.update(id, data);
   }
 
   @Delete(':id')
   async remove(@Param('id') id: number) {
     return this.projectsService.remove(id);
+  }
+
+  @Get('/by-owner/:ownerEmail')
+  async getAllByOwnwer(@Param('ownerEmail') ownerEmail: string) {
+    return this.projectsService.getAllByOwnwer(ownerEmail);
   }
 }
